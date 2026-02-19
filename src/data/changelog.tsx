@@ -27,6 +27,14 @@ export interface ChangelogVersion {
 
 export const changelog: ChangelogVersion[] = [
   {
+    version: "0.7.0",
+    changes: [
+      "Improved accordion item width to correctly fill screen",
+      "Clip links with ellipsis when overflowing accordion content",
+      "Migrate setup to modern tooling with automated github action releases",
+    ],
+  },
+  {
     version: "0.6.0",
     changes: [
       <>
