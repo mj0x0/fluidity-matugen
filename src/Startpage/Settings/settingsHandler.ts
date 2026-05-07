@@ -5,6 +5,7 @@ import {
   links,
   searchSettings,
   themes,
+  getRandomImage,
 } from "../../data/data"
 
 export const Search = {
@@ -95,12 +96,10 @@ export const Design = {
     try {
       const activeDesign = Design.get()
 
-      // Triage: If Noctalia is active, override the static 'image' string
-      // with a fresh call to our randomizer.
-      if (activeDesign && activeDesign.name === "Noctalia") {
+      if (activeDesign && activeDesign.useRandomImage) {
         return {
           ...activeDesign,
-          image: getRandomImage() // Live injection
+          image: getRandomImage()
         }
       }
 

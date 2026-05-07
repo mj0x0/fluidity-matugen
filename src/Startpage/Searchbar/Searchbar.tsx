@@ -27,7 +27,6 @@ background-color: rgba(0, 0, 0, 0);
 color: var(--default-color);
 transition: 0.3s;
 border: none;
-/* Mapped to your Noctalia accent color */
 border-bottom: 2px solid var(--accent-color);
 opacity: 0.3;
 

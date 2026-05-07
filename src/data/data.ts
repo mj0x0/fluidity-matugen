@@ -220,6 +220,7 @@ export interface Theme {
   name: string
   colors: colorsType
   image: string
+  useRandomImage?: boolean
 }
 
 export const getRandomImage = (): string => {
@@ -229,11 +230,11 @@ export const getRandomImage = (): string => {
 
 export const themes: Theme[] = [
   {
-    name: "Noctalia",
-    // Using a getter ensures this function runs every time the theme is accessed
+    name: "Matugen",
     get image() {
       return getRandomImage();
     },
+    useRandomImage: true,
     colors: {
       "--bg-color": "var(--m3-bg)",
       "--default-color": "var(--m3-on-bg)",
