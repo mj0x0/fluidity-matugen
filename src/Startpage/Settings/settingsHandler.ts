@@ -89,12 +89,23 @@ export const Design = {
   get: () => {
     const lsDesign = localStorage.getItem("design")
     if (lsDesign) return Themes.parse(lsDesign)
-    return undefined
+      return undefined
   },
   getWithFallback: () => {
     try {
+      const activeDesign = Design.get()
+
+      // Triage: If Noctalia is active, override the static 'image' string
+      // with a fresh call to our randomizer.
+      if (activeDesign && activeDesign.name === "Noctalia") {
+        return {
+          ...activeDesign,
+          image: getRandomImage() // Live injection
+        }
+      }
+
       return (
-        Design.get() ??
+        activeDesign ??
         themes.find(theme => theme.name === "DeathAndMilk") ??
         themes[0]!
       )
@@ -105,5 +116,5 @@ export const Design = {
   },
 
   set: (design: Theme) =>
-    localStorage.setItem("design", JSON.stringify(design)),
+  localStorage.setItem("design", JSON.stringify(design)),
 }

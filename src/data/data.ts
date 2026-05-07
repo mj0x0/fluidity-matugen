@@ -6,6 +6,11 @@ import pic_5 from "./pictures/pic_5.jpg"
 import pic_6 from "./pictures/pic_6.jpg"
 import pic_7 from "./pictures/pic_7.jpg"
 import pic_8 from "./pictures/pic_8.png"
+import pic_9 from "./pictures/pic_9.png"
+import pic_10 from "./pictures/pic_10.png"
+import pic_11 from "./pictures/pic_11.png"
+import pic_12 from "./pictures/pic_12.png"
+import pic_13 from "./pictures/pic_13.png"
 import { queryToken } from "../Startpage/Searchbar/Searchbar"
 
 export interface dataElem {
@@ -158,6 +163,11 @@ export const images: dataElem[] = [
   { label: "pic_6", value: pic_6 },
   { label: "pic_7", value: pic_7 },
   { label: "pic_8", value: pic_8 },
+  { label: "pic_9", value: pic_9 },
+  { label: "pic_10", value: pic_10 },
+  { label: "pic_11", value: pic_11 },
+  { label: "pic_12", value: pic_12 },
+  { label: "pic_13", value: pic_13 },
 ]
 
 export const searchEngines: dataElem[] = [
@@ -212,7 +222,25 @@ export interface Theme {
   image: string
 }
 
+export const getRandomImage = (): string => {
+  const randomIndex = Math.floor(Math.random() * images.length);
+  return images[randomIndex].value;
+};
+
 export const themes: Theme[] = [
+  {
+    name: "Noctalia",
+    // Using a getter ensures this function runs every time the theme is accessed
+    get image() {
+      return getRandomImage();
+    },
+    colors: {
+      "--bg-color": "var(--m3-bg)",
+      "--default-color": "var(--m3-on-bg)",
+      "--accent-color": "var(--m3-primary)",
+      "--accent-color2": "var(--m3-secondary)",
+    },
+  },
   {
     name: "Catppuccin",
     image:

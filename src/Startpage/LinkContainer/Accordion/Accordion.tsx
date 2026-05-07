@@ -14,7 +14,7 @@ export const AccordionContainer = ({ children }: PropsWithChildren) => (
 )
 
 const StyledAccordionGroup = styled.div<{ active: boolean }>`
-  height: 400px;
+  height: clamp(150px, 22vw, 400px);
   display: flex;
   ${({ active }) => active && "flex: 1;"}
   padding: 0 10px;
@@ -40,7 +40,7 @@ const AccordionTitleWrapper = styled.button<{ active: boolean }>`
   background-color: var(--bg-color);
   border: 4px solid var(--accent-color);
   height: 100%;
-  width: 90px;
+  width: clamp(40px, 5.5vw, 90px);
   cursor: ${({ active }) => (active ? "default" : "pointer")};
   display: flex;
   align-items: center;
@@ -52,7 +52,7 @@ const AccordionTitleWrapper = styled.button<{ active: boolean }>`
     position: absolute;
     bottom: 0px;
     width: 100%;
-    height: ${({ active }) => (active ? "390px" : "0")};
+    height: ${({ active }) => (active ? "calc(100% - 10px)" : "0")};
     background-color: var(--accent-color);
     transition: ${({ active }) => (active ? "1s" : ".5s")};
   }
@@ -66,7 +66,7 @@ const AccordionTitleWrapper = styled.button<{ active: boolean }>`
                 height: 50%;
             }
             > .wave {
-                top: 180px;
+                top: 50%;
                 ::before{
                     animation: wave 12s infinite cubic-bezier(0.71, 0.33, 0.33, 0.68);
                     top: -25%;
@@ -78,10 +78,10 @@ const AccordionTitleWrapper = styled.button<{ active: boolean }>`
 
   > .wave {
     /* Waves Source: https://codepen.io/mburakerman/pen/eRZZEv */
-    width: 82px;
+    width: calc(100% - 8px);
     height: 50px;
     position: absolute;
-    top: ${({ active }) => (active ? "0px" : "350px")};
+    top: ${({ active }) => (active ? "0px" : "calc(100% - 50px)")};
     overflow: hidden;
     transition: ${({ active }) => (active ? "1s" : ".5s")};
     ::before {
@@ -147,18 +147,10 @@ const getAvailableContentWidth = (element: HTMLElement | null) => {
   const parent = element?.parentElement
   if (!parent) return 0
   if (parent.children.length === 1) return "100%"
-  const accordionHeaderWidth = (() => {
-    const width = 90
-    const paddingX = 10 * 2
-    const border = 3
-    return width + paddingX + border
-  })()
-  const firstBorder = 3
-  return (
-    parent.offsetWidth -
-    firstBorder -
-    parent.children.length * accordionHeaderWidth
-  )
+  const button = element.firstElementChild as HTMLElement
+  const style = getComputedStyle(element)
+  const padding = parseFloat(style.paddingLeft) + parseFloat(style.paddingRight)
+  return element.offsetWidth - (button?.offsetWidth ?? 90) - padding
 }
 
 export const AccordionGroup = ({

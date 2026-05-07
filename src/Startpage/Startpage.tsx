@@ -16,8 +16,8 @@ const Wrapper = styled.div`
 `
 
 const StyledStartpage = styled.div`
-  gap: 100px;
-  padding: 0px 100px;
+  gap: clamp(20px, 5vw, 100px);
+  padding: 0 clamp(20px, 5vw, 100px);
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
@@ -26,8 +26,8 @@ const StyledStartpage = styled.div`
 `
 
 const Image = styled.img`
-  height: 400px;
-  width: 400px;
+  height: clamp(150px, 22vw, 400px);
+  width: clamp(150px, 22vw, 400px);
   border: 2px solid var(--default-color);
   padding: 10px;
   object-fit: cover;

@@ -1,17 +1,17 @@
-@import "./variables.css"; 
-@import "./animations.css"; 
+@import "./variables.css";
+@import "./animations.css";
 
 /***********************
  * Idk what this does. *
- *    No touchies.	   *
+ *    No touchies.       *
  **********************/
 body {
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
 }
 
 /********************
- *   	  Fonts 		  *
+ *        Fonts           *
  ********************/
 @font-face {
 	font-family: 'Fira Code';
@@ -31,7 +31,7 @@ body * {
 }
 
 /********************
- * 	   General		  *
+ *        General          *
  ********************/
 
 html, body, #root {
@@ -40,37 +40,42 @@ html, body, #root {
 }
 body {
 	margin: 0;
+	/* This pulls from the Theme object in data.ts */
 	background-color: var(--bg-color);
 	color: var(--default-color);
 	overflow: hidden;
+	transition: background-color 0.3s ease, color 0.3s ease;
 }
 p {
 	margin:0px
 }
 a, a:visited, a:active {
-	color: var(--default-color);
+	color: var(--accent-color); /* Switched to accent for better visibility */
 	text-decoration: none;
+	transition: color 0.2s ease;
+}
+
+a:hover {
+	color: var(--accent-color2); /* Secondary accent on hover */
 }
 
 /********************
- * 	   Scrollbar	*
+ *        Scrollbar    *
  ********************/
 ::-webkit-scrollbar {
-    /* width */
-    width: 10px;
+	width: 8px;
 }
 
 ::-webkit-scrollbar-thumb {
-    /* Handle */
-    background: var(--default-color);
+	/* Uses accent color to match your system theme */
+	background: var(--accent-color);
+	border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-	/* Handle on hover */
-    background: var(--default-color);
+	background: var(--accent-color2);
 }
 
-::-webkit-scrollbar-track-piece {
-    /* not handle on */
-    background: transparent;
+::-webkit-scrollbar-track {
+	background: transparent;
 }
