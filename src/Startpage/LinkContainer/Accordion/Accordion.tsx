@@ -17,6 +17,7 @@ const StyledAccordionGroup = styled.div<{ active: boolean }>`
   height: clamp(150px, 22vw, 400px);
   display: flex;
   ${({ active }) => active && "flex: 1;"}
+  min-width: calc(clamp(40px, 5.5vw, 90px) + 20px);
   padding: 0 10px;
   flex-direction: row;
   border-right: 3px solid var(--default-color);
