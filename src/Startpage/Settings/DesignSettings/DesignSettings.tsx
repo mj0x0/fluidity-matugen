@@ -168,6 +168,20 @@ export const SettingButtonRow = styled.div`
   display: flex;
   justify-content: space-between;
 `
+const ToggleLabel = styled.label`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--default-color);
+  cursor: pointer;
+  user-select: none;
+`
+const ToggleCheckbox = styled.input`
+  width: 16px;
+  height: 16px;
+  accent-color: var(--accent-color);
+  cursor: pointer;
+`
 
 const AccordionPreview = ({
   title,
@@ -193,6 +207,7 @@ const themeEquals = (theme1: Theme, theme2: Theme) => {
   let isEqual = true
   if (theme1.name !== theme2.name) isEqual = false
   if (theme1.image !== theme2.image) isEqual = false
+  if (!!theme1.useRandomImage !== !!theme2.useRandomImage) isEqual = false
   Object.keys(theme1.colors).forEach(key => {
     if (theme1.colors[key] !== theme2.colors[key]) isEqual = false
   })
@@ -209,6 +224,8 @@ export const DesignSettings = ({
   const setColors = (colors: colorsType) =>
     setDesign({ ...design, colors: colors })
   const setImage = (image: string) => setDesign({ ...design, image: image })
+  const setUseRandomImage = (val: boolean) =>
+    setDesign({ ...design, useRandomImage: val })
 
   const designChanged = useMemo(
     () => !themes.some(theme => themeEquals(theme, design)),
@@ -264,16 +281,28 @@ export const DesignSettings = ({
           <SectionDivider />
 
           <SettingElement>
-            <OptionTextInput
-              value={design.image}
-              onChange={setImage}
-              placeholder="Image URL"
-            />
-            <OptionSlider
-              currentValue={design.image}
-              values={images}
-              onChange={setImage}
-            />
+            <ToggleLabel>
+              <ToggleCheckbox
+                type="checkbox"
+                checked={!!design.useRandomImage}
+                onChange={e => setUseRandomImage(e.target.checked)}
+              />
+              Random Image
+            </ToggleLabel>
+            {!design.useRandomImage && (
+              <>
+                <OptionTextInput
+                  value={design.image}
+                  onChange={setImage}
+                  placeholder="Image URL"
+                />
+                <OptionSlider
+                  currentValue={design.image}
+                  values={images}
+                  onChange={setImage}
+                />
+              </>
+            )}
           </SettingElement>
 
           <SectionDivider />
