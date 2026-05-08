@@ -1,0 +1,26 @@
+/* Noctalia generated variables - Full M3 Dark Palette */
+:root {
+  /* Main UI Surface */
+  --m3-bg: #121316;
+  --m3-on-bg: #e3e2e6;
+  --m3-surface-variant: #44474f;
+  --m3-on-surface-variant: #c4c6d0;
+
+  /* Primary Accents */
+  --m3-primary: #adc6ff;
+  --m3-on-primary: #002e69;
+  --m3-primary-container: #0f448e;
+
+  /* Secondary/Tertiary */
+  --m3-secondary: #bfc6dc;
+  --m3-tertiary: #debcdf;
+  --m3-on-tertiary: #402843;
+
+  /* Utility & Feedback */
+  --m3-outline: #8e9099;
+  --m3-error: #ffb4ab;
+
+  /* Interaction states with filters */
+  --m3-hover: #adc6ff;
+  --m3-on-hover: #002e69;
+}
