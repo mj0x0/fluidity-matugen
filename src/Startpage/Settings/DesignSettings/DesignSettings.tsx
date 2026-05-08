@@ -224,8 +224,14 @@ export const DesignSettings = ({
   const setColors = (colors: colorsType) =>
     setDesign({ ...design, colors: colors })
   const setImage = (image: string) => setDesign({ ...design, image: image })
-  const setUseRandomImage = (val: boolean) =>
-    setDesign({ ...design, useRandomImage: val })
+  const setUseRandomImage = (val: boolean) => {
+    if (!val) {
+      const originalTheme = themes.find(t => t.name === design.name)
+      setDesign({ ...design, useRandomImage: false, image: originalTheme?.image ?? design.image })
+    } else {
+      setDesign({ ...design, useRandomImage: true })
+    }
+  }
 
   const designChanged = useMemo(
     () => !themes.some(theme => themeEquals(theme, design)),
