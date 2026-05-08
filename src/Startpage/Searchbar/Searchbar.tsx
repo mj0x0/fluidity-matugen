@@ -56,15 +56,21 @@ const IconWrapper = styled.div`
 `
 
 const SearchIcon = styled.div<{ src: string }>`
-  height: 2.9rem;
-  width: 3.1rem;
-  margin: auto 10px auto 0;
-  cursor: ew-resize;
+height: 2.9rem;
+width: 3.1rem;
+margin: auto 10px auto 0;
+cursor: ew-resize;
 
-  background: var(--accent-color);
+background: var(--accent-color);
 
-  mask-size: cover;
-  mask-image: url(${({ src }) => src});
+mask-size: contain;
+mask-repeat: no-repeat;
+mask-position: center bottom;
+mask-image: url(${({ src }) => src});
+-webkit-mask-image: url(${({ src }) => src});
+-webkit-mask-size: contain;
+-webkit-mask-repeat: no-repeat;
+-webkit-mask-position: center bottom;
 `
 
 const EngineLabel = styled.span`
