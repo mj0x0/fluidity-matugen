@@ -5,11 +5,12 @@ import styled from "@emotion/styled"
 import { AccordionContainer, AccordionGroup } from "./Accordion/Accordion"
 import * as Settings from "../Settings/settingsHandler"
 
-const LinkItem = styled.a`
+const LinkItem = styled.a<{ dense?: boolean }>`
   max-width: fit-content;
+  flex-shrink: 0;
   white-space: nowrap;
   position: relative;
-  padding: 10px 0 10px 30px;
+  padding: ${({ dense }) => (dense ? "5px 0 5px 30px" : "10px 0 10px 30px")};
   font-size: 1rem;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -76,11 +77,13 @@ export const LinkContainer = ({
           key={group.title}
           active={isActive(groupIndex)}
           title={group.title}
+          icon={group.icon}
           onClick={() => selectGroup(groupIndex)}
           onMouseDown={e => middleMouseHandler(e, groupIndex)}
         >
           {group.links.map(link => (
             <LinkItem
+              dense={group.links.length > 9}
               tabIndex={!isActive(groupIndex) ? -1 : undefined}
               key={link.label}
               href={link.value}

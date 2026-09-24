@@ -145,9 +145,10 @@ export const Searchbar = () => {
       <StyledSearchbar
         placeholder="Always stay clean!"
         type="input"
-        onKeyUp={e =>
-          e.key === "Enter" && redirectToSearch(e.currentTarget.value)
-        }
+        onKeyUp={e => {
+          if (e.key === "Enter" && e.currentTarget.value.trim())
+            redirectToSearch(e.currentTarget.value)
+        }}
         autoFocus
       />
     </StyledSearchbarContainer>

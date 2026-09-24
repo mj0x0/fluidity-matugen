@@ -20,6 +20,7 @@ export interface dataElem {
 
 export interface linkGroup {
   title: string
+  icon?: string
   links: dataElem[]
 }
 

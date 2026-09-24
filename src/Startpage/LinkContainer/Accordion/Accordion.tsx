@@ -31,9 +31,14 @@ const AccordionContent = styled.div`
   flex: 1;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: safe center;
   overflow: hidden;
   transition: 300ms;
+
+  /* Collapsed groups shouldn't catch clicks on their clipped links. */
+  &[aria-hidden="true"] {
+    pointer-events: none;
+  }
 `
 
 const AccordionTitleWrapper = styled.button<{ active: boolean }>`
@@ -137,9 +142,32 @@ const AccordionTitle = styled.h1<{ title: string; active: boolean }>`
   letter-spacing: 5px;
 `
 
+// Mask-tinted category icon at the top of the bar; fades as the group opens.
+const CategoryIcon = styled.div<{ src: string; active: boolean }>`
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: clamp(18px, 2.2vw, 32px);
+  height: clamp(18px, 2.2vw, 32px);
+  z-index: 2;
+  background-color: ${({ active }) => (active ? "var(--accent-color)" : "#fff")};
+  opacity: 0.9;
+  transition: 0.5s;
+  mask-image: url("${({ src }) => src}");
+  -webkit-mask-image: url("${({ src }) => src}");
+  mask-size: contain;
+  -webkit-mask-size: contain;
+  mask-repeat: no-repeat;
+  -webkit-mask-repeat: no-repeat;
+  mask-position: center;
+  -webkit-mask-position: center;
+`
+
 type groupProps = PropsWithChildren<{
   active: boolean
   title: string
+  icon?: string
   onClick: () => void
   onMouseDown: (e: MouseEvent) => void
 }>
@@ -157,6 +185,7 @@ const getAvailableContentWidth = (element: HTMLElement | null) => {
 export const AccordionGroup = ({
   active,
   title,
+  icon,
   children,
   onClick,
   onMouseDown,
@@ -180,6 +209,7 @@ export const AccordionGroup = ({
         onClick={onClick}
         tabIndex={active ? -1 : undefined}
       >
+        {icon && <CategoryIcon src={icon} active={active} />}
         <div className="wave" />
         <AccordionTitle active={active} title={title}>
           {title}
