@@ -10,18 +10,21 @@ const LinkItem = styled.a<{ dense?: boolean }>`
   flex-shrink: 0;
   white-space: nowrap;
   position: relative;
-  padding: ${({ dense }) => (dense ? "5px 0 5px 30px" : "10px 0 10px 30px")};
-  font-size: 1rem;
+  padding: ${({ dense }) => {
+      const p = dense ? 5 : 10
+      return `calc(${p}px * var(--fit, 1)) 0 calc(${p}px * var(--fit, 1)) 30px`
+    }};
+  font-size: calc(1rem * var(--fit, 1));
   overflow: hidden;
   text-overflow: ellipsis;
 
   ::before {
     position: absolute;
     left: 0px;
-    bottom: 5px;
+    bottom: calc(5px * var(--fit, 1));
     z-index: 0;
     content: "";
-    height: 5px;
+    height: calc(5px * var(--fit, 1));
     width: 100%;
     background-color: var(--accent-color);
     transition: 0.5s;

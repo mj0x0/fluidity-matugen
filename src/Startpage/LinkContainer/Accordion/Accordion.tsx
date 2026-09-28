@@ -1,4 +1,12 @@
-import { MouseEvent, PropsWithChildren, useState } from "react"
+import {
+  Children,
+  CSSProperties,
+  MouseEvent,
+  PropsWithChildren,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from "react"
 
 import { css } from "@emotion/react"
 import styled from "@emotion/styled"
@@ -190,19 +198,28 @@ export const AccordionGroup = ({
   onClick,
   onMouseDown,
 }: groupProps) => {
+  const groupRef = useRef<HTMLDivElement>(null)
   const [contentWidth, setContentWidth] = useState<number | string | null>(null)
+  const [fit, setFit] = useState(1)
+  const count = Children.count(children)
+
+  useLayoutEffect(() => {
+    const group = groupRef.current
+    if (!group) return
+    const measure = () => {
+      setContentWidth(active ? getAvailableContentWidth(group) : 0)
+      // Shrink links just enough to fit the bar's height when a group is long.
+      const base = count > 9 ? 30 : 40
+      setFit(Math.min(1, Math.max(0.55, group.clientHeight / (count * base))))
+    }
+    measure()
+    const observer = new ResizeObserver(measure)
+    observer.observe(group)
+    return () => observer.disconnect()
+  }, [active, count])
 
   return (
-    <StyledAccordionGroup
-      ref={element => {
-        if (element && active) {
-          setContentWidth(getAvailableContentWidth(element))
-        } else {
-          setContentWidth(0)
-        }
-      }}
-      active={active}
-    >
+    <StyledAccordionGroup ref={groupRef} active={active}>
       <AccordionTitleWrapper
         active={active}
         onMouseDown={onMouseDown}
@@ -216,12 +233,15 @@ export const AccordionGroup = ({
         </AccordionTitle>
       </AccordionTitleWrapper>
       <AccordionContent
-        style={{
-          width:
-            typeof contentWidth === "string"
-              ? contentWidth
-              : `${contentWidth ?? 0}px`,
-        }}
+        style={
+          {
+            width:
+              typeof contentWidth === "string"
+                ? contentWidth
+                : `${contentWidth ?? 0}px`,
+            "--fit": fit,
+          } as CSSProperties
+        }
         aria-hidden={!active || undefined}
       >
         {children}
