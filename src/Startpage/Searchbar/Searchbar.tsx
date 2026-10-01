@@ -91,6 +91,7 @@ export const Searchbar = () => {
     Settings.Search.getWithFallback
   )
   const touchStartX = useRef(0)
+  const lastWheel = useRef(0)
 
   const engine = searchSettings.engine
 
@@ -129,6 +130,9 @@ export const Searchbar = () => {
       <IconWrapper
         onWheel={e => {
           e.preventDefault()
+          // Cooldown so one scroll flick switches once, not several.
+          if (Date.now() - lastWheel.current < 200) return
+          lastWheel.current = Date.now()
           cycleEngine(e.deltaY > 0 ? 1 : -1)
         }}
         onTouchStart={e => {
