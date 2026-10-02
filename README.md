@@ -13,18 +13,24 @@ This is a fork of [PrettyCoffee's Fluidity](https://github.com/PrettyCoffee/flui
 - **Auto-fit link groups** — long groups shrink to fit the accordion instead of clipping or needing a scrollbar.
 - **Horizontal or vertical accordion** — switch the accordion orientation in the settings.
 - **Category icons** — per-group hand-drawn (potrace) icons, mask-tinted to match the theme.
+- **Mobile view** — a stacked, touch-friendly layout on phones and narrow windows (auto-switches to the vertical accordion).
+- **Expand / collapse all** — a one-tap toggle to open every accordion group at once.
+- **Dynamic theming (Matugen)** — colors come from a [Matugen](https://github.com/InioX/matugen) template, so the page recolors to match your wallpaper / system palette.
 
 ## Showcase
-### The startpage in action
-I created a [reddit post](https://www.reddit.com/r/startpages/comments/m82izg/my_new_startpage_any_ideas_for_names/) on r/startpages. There you can see a short video where I show all available features.
 
-You can also just take a look at the [Live Demo](https://prettycoffee.github.io/fluidity/).
-
-### Themes
-![Default theme](https://github.com/PrettyCoffee/fluidity/blob/main/docs/default-theme.png)
-![Dark Souls theme](https://github.com/PrettyCoffee/fluidity/blob/main/docs/DarkSouls-theme.png)
-![Pop!OS theme](https://github.com/PrettyCoffee/fluidity/blob/main/docs/pop!os-theme.png)
-**If you created a theme and want to see it here, hit me up!**
+<table>
+  <tr>
+    <td width="33%" align="center"><b>Horizontal</b></td>
+    <td width="33%" align="center"><b>Vertical</b></td>
+    <td width="33%" align="center"><b>Mobile</b></td>
+  </tr>
+  <tr>
+    <td><img src="docs/showcase-horizontal.png" width="100%"></td>
+    <td><img src="docs/showcase-vertical.png" width="100%"></td>
+    <td><img src="docs/showcase-mobile.png" width="100%"></td>
+  </tr>
+</table>
 
 ## Usage
 You can apply startpages by using several methods. To keep it simple, I will only cover one (the easiest) here:
