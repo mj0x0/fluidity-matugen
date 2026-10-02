@@ -3,12 +3,37 @@ import {
   Theme,
   Search as SearchType,
   ClockSettings as ClockType,
+  LayoutSettings as LayoutType,
   links,
   searchSettings,
   clockSettings,
+  layoutSettings,
   themes,
   getRandomImage,
 } from "../../data/data"
+
+export const Layout = {
+  get: () => {
+    const lsLayout = localStorage.getItem("layout-settings")
+    if (lsLayout) return Layout.parse(lsLayout)
+    return undefined
+  },
+  getWithFallback: () => {
+    try {
+      return Layout.get() ?? layoutSettings
+    } catch {
+      console.error(
+        "Your currently applied layout settings appear to be corrupted."
+      )
+      return layoutSettings
+    }
+  },
+
+  set: (layoutSettings: LayoutType) =>
+    localStorage.setItem("layout-settings", JSON.stringify(layoutSettings)),
+
+  parse: (layoutSettings: string) => JSON.parse(layoutSettings) as LayoutType,
+}
 
 export const Clock = {
   get: () => {

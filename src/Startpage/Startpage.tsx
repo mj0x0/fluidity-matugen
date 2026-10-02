@@ -7,7 +7,10 @@ import { ExpandToggle } from "./ExpandToggle/ExpandToggle"
 import { LinkContainer } from "./LinkContainer/LinkContainer"
 import { Searchbar } from "./Searchbar/Searchbar"
 import { Settings } from "./Settings/Settings"
-import { Design as DesignSettings } from "./Settings/settingsHandler"
+import {
+  Design as DesignSettings,
+  Layout as LayoutSettings,
+} from "./Settings/settingsHandler"
 import { images } from "../data/data"
 
 const Wrapper = styled.div`
@@ -40,14 +43,17 @@ const Image = styled.img`
 export const Startpage = () => {
   const [img, setImg] = useState(DesignSettings.getWithFallback().image)
   const [expandAll, setExpandAll] = useState(false)
+  const [layout] = useState(() => LayoutSettings.getWithFallback())
+  const vertical = layout.orientation === "vertical"
 
   return (
     <Wrapper>
       <StyledStartpage>
-        <div>
+        <div style={vertical ? { display: "flex" } : undefined}>
           <Image src={img} onError={() => setImg(images[0]!.value)} />
         </div>
         <LinkContainer
+          orientation={layout.orientation}
           expandAll={expandAll}
           onExitExpandAll={() => setExpandAll(false)}
         />

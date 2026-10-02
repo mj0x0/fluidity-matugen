@@ -221,6 +221,16 @@ export const clockSettings: ClockSettings = {
   showDate: true,
 }
 
+export type Orientation = "horizontal" | "vertical"
+
+export interface LayoutSettings {
+  orientation: Orientation
+}
+
+export const layoutSettings: LayoutSettings = {
+  orientation: "horizontal",
+}
+
 export interface colorsType {
   [key: string]: string
   "--bg-color": string

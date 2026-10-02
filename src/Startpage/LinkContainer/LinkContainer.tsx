@@ -3,6 +3,7 @@ import { MouseEvent, useState } from "react"
 import styled from "@emotion/styled"
 
 import { AccordionContainer, AccordionGroup } from "./Accordion/Accordion"
+import { Orientation } from "../../data/data"
 import * as Settings from "../Settings/settingsHandler"
 
 const LinkItem = styled.a<{ dense?: boolean }>`
@@ -45,11 +46,13 @@ const LinkItem = styled.a<{ dense?: boolean }>`
 `
 
 type props = {
+  orientation?: Orientation
   expandAll?: boolean
   onExitExpandAll?: () => void
 }
 
 export const LinkContainer = ({
+  orientation = "horizontal",
   expandAll = false,
   onExitExpandAll,
 }: props) => {
@@ -74,10 +77,12 @@ export const LinkContainer = ({
   }
 
   return (
-    <AccordionContainer>
+    <AccordionContainer orientation={orientation}>
       {linkGroups.map((group, groupIndex) => (
         <AccordionGroup
           key={group.title}
+          orientation={orientation}
+          openCount={expandAll ? linkGroups.length : 1}
           active={isActive(groupIndex)}
           title={group.title}
           icon={group.icon}
@@ -86,7 +91,7 @@ export const LinkContainer = ({
         >
           {group.links.map(link => (
             <LinkItem
-              dense={group.links.length > 9}
+              dense={orientation === "vertical" || group.links.length > 9}
               tabIndex={!isActive(groupIndex) ? -1 : undefined}
               key={link.label}
               href={link.value}

@@ -141,6 +141,9 @@ export const SettingsWindow = ({ hidePopup }: props) => {
   const [clockSettings, setClockSettings] = useState(
     Settings.Clock.getWithFallback()
   )
+  const [layoutSettings, setLayoutSettings] = useState(
+    Settings.Layout.getWithFallback()
+  )
 
   const applyValues = () => {
     Settings.Design.set(design)
@@ -148,6 +151,7 @@ export const SettingsWindow = ({ hidePopup }: props) => {
     Settings.Search.set(searchSettings)
     Settings.Links.set(linkGroups)
     Settings.Clock.set(clockSettings)
+    Settings.Layout.set(layoutSettings)
     window.location.reload()
   }
 
@@ -179,6 +183,8 @@ export const SettingsWindow = ({ hidePopup }: props) => {
             setDesign={setDesign}
             themes={themes}
             setThemes={setThemes}
+            layout={layoutSettings}
+            setLayout={setLayoutSettings}
           />
         )}
 
