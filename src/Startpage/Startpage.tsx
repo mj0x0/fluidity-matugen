@@ -11,6 +11,7 @@ import {
   Design as DesignSettings,
   Layout as LayoutSettings,
 } from "./Settings/settingsHandler"
+import { narrowQuery, useNarrow } from "./useNarrow"
 import { images } from "../data/data"
 
 const Wrapper = styled.div`
@@ -28,6 +29,25 @@ const StyledStartpage = styled.div`
   justify-content: flex-start;
   align-items: center;
   height: calc(100% - 100px);
+
+  @media ${narrowQuery} {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 14px;
+    padding: 14px 16px 0;
+    height: calc(100% - 90px);
+  }
+`
+
+const ImageFrame = styled.div<{ vertical: boolean }>`
+  ${({ vertical }) => vertical && "display: flex;"}
+
+  @media ${narrowQuery} {
+    justify-content: center;
+  }
+  @media ${narrowQuery} and (max-height: 600px) {
+    display: none;
+  }
 `
 
 const Image = styled.img`
@@ -38,28 +58,37 @@ const Image = styled.img`
   object-fit: cover;
 
   animation: circling-shadow 4s ease 0s infinite normal;
+
+  @media ${narrowQuery} {
+    height: clamp(96px, 30vw, 150px);
+    width: clamp(96px, 30vw, 150px);
+    padding: 6px;
+  }
 `
 
 export const Startpage = () => {
   const [img, setImg] = useState(DesignSettings.getWithFallback().image)
   const [expandAll, setExpandAll] = useState(false)
   const [layout] = useState(() => LayoutSettings.getWithFallback())
-  const vertical = layout.orientation === "vertical"
+  const narrow = useNarrow()
+  // Horizontal bars can't fit a phone, whatever the setting says.
+  const orientation = narrow ? "vertical" : layout.orientation
 
   return (
     <Wrapper>
       <StyledStartpage>
-        <div style={vertical ? { display: "flex" } : undefined}>
+        <Clock />
+        <ImageFrame vertical={orientation === "vertical"}>
           <Image src={img} onError={() => setImg(images[0]!.value)} />
-        </div>
+        </ImageFrame>
         <LinkContainer
-          orientation={layout.orientation}
+          orientation={orientation}
+          narrow={narrow}
           expandAll={expandAll}
           onExitExpandAll={() => setExpandAll(false)}
         />
       </StyledStartpage>
       <Searchbar />
-      <Clock />
       <ExpandToggle
         active={expandAll}
         onToggle={() => setExpandAll(value => !value)}

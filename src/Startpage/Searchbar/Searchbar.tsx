@@ -7,6 +7,7 @@ import google from "../../data/pictures/google.svg"
 import qwant from "../../data/pictures/qwant.svg"
 import { searchEngines } from "../../data/data"
 import * as Settings from "../Settings/settingsHandler"
+import { narrowQuery } from "../useNarrow"
 
 export const queryToken = "{{query}}"
 
@@ -19,6 +20,13 @@ const StyledSearchbarContainer = styled.div`
   display: flex;
   align-items: flex-start;
   justify-content: center;
+
+  @media ${narrowQuery} {
+    left: 16px;
+    right: 16px;
+    bottom: 16px;
+    align-items: flex-end;
+  }
 `
 
 const StyledSearchbar = styled.input`
@@ -43,6 +51,12 @@ const StyledSearchbar = styled.input`
     outline: none;
     border-bottom: 2px solid var(--accent-color2);
   }
+
+  @media ${narrowQuery} {
+    min-width: 0;
+    font-size: 18px;
+    padding: 8px 2px;
+  }
 `
 
 const IconWrapper = styled.div`
@@ -52,6 +66,11 @@ const IconWrapper = styled.div`
 
   &:hover > span {
     opacity: 1;
+  }
+
+  /* Keeps the engine swipe from being taken as a browser gesture. */
+  @media ${narrowQuery} {
+    touch-action: none;
   }
 `
 
@@ -71,6 +90,12 @@ mask-image: url("${({ src }) => src}");
 -webkit-mask-size: contain;
 -webkit-mask-repeat: no-repeat;
 -webkit-mask-position: center bottom;
+
+@media ${narrowQuery} {
+  height: 2rem;
+  width: 2.1rem;
+  margin-bottom: 6px;
+}
 `
 
 const EngineLabel = styled.span`

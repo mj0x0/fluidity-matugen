@@ -3,6 +3,7 @@ import { useEffect, useState } from "react"
 import styled from "@emotion/styled"
 
 import * as Settings from "../Settings/settingsHandler"
+import { narrowQuery } from "../useNarrow"
 
 const Greeting = styled.div`
   font-size: 14px;
@@ -15,6 +16,10 @@ const Time = styled.div`
   font-weight: 500;
   /* Keeps digits from shifting as they change. */
   font-variant-numeric: tabular-nums;
+
+  @media ${narrowQuery} {
+    font-size: 28px;
+  }
 `
 
 const DateLabel = styled.div`
@@ -43,6 +48,12 @@ const ClockContainer = styled.div`
     .clock-time {
       animation: text-flicker 0.01s ease 0s infinite alternate;
     }
+  }
+
+  /* Phones: first item of the stacked column instead of a fixed corner. */
+  @media ${narrowQuery} {
+    position: static;
+    align-self: flex-start;
   }
 `
 

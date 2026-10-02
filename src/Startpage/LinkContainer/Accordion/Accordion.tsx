@@ -13,13 +13,27 @@ import styled from "@emotion/styled"
 
 import { Orientation } from "../../../data/data"
 
-const StyledAccordionContainer = styled.div<{ vertical: boolean }>`
+const StyledAccordionContainer = styled.div<{
+  vertical: boolean
+  narrow: boolean
+}>`
   display: flex;
   flex: 1;
   overflow: hidden;
-  ${({ vertical }) =>
+  ${({ vertical, narrow }) =>
     vertical &&
+    (narrow
+      ? `
+      flex-direction: column;
+      min-height: 0;
+      overflow-y: auto;
+      scrollbar-width: none;
+      ::-webkit-scrollbar {
+        display: none;
+      }
+      --bar: 44px;
     `
+      : `
       flex-direction: column;
       justify-content: safe center;
       min-width: 0;
@@ -27,15 +41,17 @@ const StyledAccordionContainer = styled.div<{ vertical: boolean }>`
       height: calc(100% - 220px);
       min-height: var(--column);
       --bar: clamp(28px, calc(var(--column) * 0.55 / var(--groups, 4) - 11px), 42px);
-    `}
+    `)}
 `
 
 export const AccordionContainer = ({
   orientation = "horizontal",
+  narrow = false,
   children,
-}: PropsWithChildren<{ orientation?: Orientation }>) => (
+}: PropsWithChildren<{ orientation?: Orientation; narrow?: boolean }>) => (
   <StyledAccordionContainer
     vertical={orientation === "vertical"}
+    narrow={narrow}
     style={{ "--groups": Children.count(children) } as CSSProperties}
   >
     {children}
@@ -68,10 +84,18 @@ const StyledAccordionGroup = styled.div<{ active: boolean; vertical: boolean }>`
     `}
 `
 
-const AccordionContent = styled.div<{ vertical: boolean }>`
+const AccordionContent = styled.div<{ vertical: boolean; narrow: boolean }>`
   overflow: hidden;
-  ${({ vertical }) =>
-    vertical
+  ${({ vertical, narrow }) =>
+    vertical && narrow
+      ? `
+      display: flex;
+      flex-direction: column;
+      justify-content: safe center;
+      padding-left: 24px;
+      transition: height 300ms;
+    `
+      : vertical
       ? `
       display: grid;
       grid-auto-flow: column;
@@ -308,6 +332,7 @@ type groupProps = PropsWithChildren<{
   title: string
   icon?: string
   orientation?: Orientation
+  narrow?: boolean
   openCount?: number
   onClick: () => void
   onMouseDown: (e: MouseEvent) => void
@@ -418,6 +443,7 @@ export const AccordionGroup = ({
   title,
   icon,
   orientation = "horizontal",
+  narrow = false,
   openCount = 1,
   children,
   onClick,
@@ -435,6 +461,17 @@ export const AccordionGroup = ({
     const parent = group?.parentElement
     if (!group || !parent) return
     const measure = () => {
+      if (vertical && narrow) {
+        // Phones: one full-size list per group; the column scrolls instead.
+        const links = Array.from(group.lastElementChild?.children ?? [])
+        const height = links.reduce(
+          (sum, link) => sum + (link as HTMLElement).offsetHeight,
+          8
+        )
+        setContentSize(active ? height : 0)
+        setFit(1)
+        return
+      }
       if (vertical) {
         const layout = active ? solveColumn(parent).get(group) : undefined
         setContentSize(layout?.height ?? 0)
@@ -453,7 +490,7 @@ export const AccordionGroup = ({
     const observer = new ResizeObserver(measure)
     observer.observe(vertical ? parent : group)
     return () => observer.disconnect()
-  }, [active, count, vertical, openCount])
+  }, [active, count, vertical, narrow, openCount])
 
   const size =
     typeof contentSize === "string" ? contentSize : `${contentSize ?? 0}px`
@@ -482,6 +519,7 @@ export const AccordionGroup = ({
       </AccordionTitleWrapper>
       <AccordionContent
         vertical={vertical}
+        narrow={narrow}
         style={
           {
             [vertical ? "height" : "width"]: size,

@@ -47,12 +47,14 @@ const LinkItem = styled.a<{ dense?: boolean }>`
 
 type props = {
   orientation?: Orientation
+  narrow?: boolean
   expandAll?: boolean
   onExitExpandAll?: () => void
 }
 
 export const LinkContainer = ({
   orientation = "horizontal",
+  narrow = false,
   expandAll = false,
   onExitExpandAll,
 }: props) => {
@@ -77,11 +79,12 @@ export const LinkContainer = ({
   }
 
   return (
-    <AccordionContainer orientation={orientation}>
+    <AccordionContainer orientation={orientation} narrow={narrow}>
       {linkGroups.map((group, groupIndex) => (
         <AccordionGroup
           key={group.title}
           orientation={orientation}
+          narrow={narrow}
           openCount={expandAll ? linkGroups.length : 1}
           active={isActive(groupIndex)}
           title={group.title}
@@ -91,7 +94,10 @@ export const LinkContainer = ({
         >
           {group.links.map(link => (
             <LinkItem
-              dense={orientation === "vertical" || group.links.length > 9}
+              dense={
+                !narrow &&
+                (orientation === "vertical" || group.links.length > 9)
+              }
               tabIndex={!isActive(groupIndex) ? -1 : undefined}
               key={link.label}
               href={link.value}

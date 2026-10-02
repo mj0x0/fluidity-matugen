@@ -2,6 +2,7 @@ import styled from "@emotion/styled"
 
 import { changelog, ChangelogVersion } from "../../../data/changelog"
 import logo from "../../../data/pictures/logo.png"
+import { narrowQuery } from "../../useNarrow"
 
 const ChangelogWrapper = styled.div`
   width: 100%;
@@ -23,9 +24,17 @@ const StyledVersion = styled.div`
   > p {
     margin-bottom: 10px;
   }
+
+  @media ${narrowQuery} {
+    width: 100%;
+  }
 `
 const ChangeItem = styled.li`
   white-space: nowrap;
+
+  @media ${narrowQuery} {
+    white-space: normal;
+  }
 `
 
 const Version = ({ version, description, changes }: ChangelogVersion) => (

@@ -2,6 +2,8 @@ import styled from "@emotion/styled"
 import { faCompress, faExpand } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 
+import { narrowQuery } from "../useNarrow"
+
 // Sits just left of the settings gear (which lives at right: 20px).
 const ExpandToggleButton = styled.button<{ active: boolean }>`
   position: fixed;
@@ -28,6 +30,12 @@ const ExpandToggleButton = styled.button<{ active: boolean }>`
   }
   :focus {
     outline: none;
+  }
+
+  @media ${narrowQuery} {
+    top: 6px;
+    right: 54px;
+    padding: 12px;
   }
 `
 

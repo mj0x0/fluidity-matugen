@@ -5,6 +5,7 @@ import { faSlidersH } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 
 import { SettingsWindow } from "./SettingsWindow"
+import { narrowQuery } from "../useNarrow"
 
 const SettingsPopupToggle = styled.button`
   position: fixed;
@@ -27,6 +28,12 @@ const SettingsPopupToggle = styled.button`
   }
   :focus {
     outline: none;
+  }
+
+  @media ${narrowQuery} {
+    top: 6px;
+    right: 6px;
+    padding: 12px;
   }
 `
 

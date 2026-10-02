@@ -10,6 +10,7 @@ import { OptionSlider } from "../../../components/OptionSlider"
 import { OptionTextInput } from "../../../components/OptionTextInput"
 import { ToggleOption } from "../../../components/ToggleOption"
 import { LayoutSettings, Theme, colorsType, images } from "../../../data/data"
+import { narrowQuery } from "../../useNarrow"
 import {
   StyledSettingsContent,
   SettingElement,
@@ -98,6 +99,13 @@ const DesignPreview = styled.div<{ name: string; colors: colorsType }>`
         display: none;
       }
     }
+  }
+  @media ${narrowQuery} {
+    width: auto;
+    height: auto;
+    flex-direction: column;
+    margin-top: 20px;
+    padding: 40px 0 20px;
   }
 `
 const ImagePreview = styled.img`
@@ -219,6 +227,10 @@ const AccordionPreviewContainer = styled.div`
 export const SettingButtonRow = styled.div`
   display: flex;
   justify-content: space-between;
+
+  @media ${narrowQuery} {
+    gap: 8px;
+  }
 `
 
 const AccordionPreview = ({

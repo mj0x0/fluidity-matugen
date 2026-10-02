@@ -6,6 +6,7 @@ import { faTrash, faPlus } from "@fortawesome/free-solid-svg-icons"
 import { IconButton } from "../../../components/IconButton"
 import { OptionTextInput } from "../../../components/OptionTextInput"
 import { FastForwards } from "../../../data/data"
+import { narrowQuery } from "../../useNarrow"
 
 const FastForwardWrapper = styled.div`
   margin-bottom: 20px;
@@ -19,6 +20,10 @@ const FastForwardTable = styled.table`
   padding: 0 20px;
   @media screen and (max-width: 1300px) {
     width: 100%;
+  }
+  @media ${narrowQuery} {
+    padding: 0;
+    table-layout: fixed;
   }
 `
 const StyledFastForwardItem = styled.tr`
@@ -35,6 +40,23 @@ const StyledFastForwardItem = styled.tr`
   }
   > :last-of-type {
     width: 50px;
+  }
+
+  @media ${narrowQuery} {
+    > td {
+      text-overflow: ellipsis;
+    }
+    > :first-of-type {
+      width: 30%;
+      max-width: none;
+    }
+    > :nth-of-type(2) {
+      width: 34px;
+      text-overflow: clip;
+    }
+    > :nth-of-type(3) {
+      max-width: none;
+    }
   }
 `
 const AddItemButton = styled(IconButton)`

@@ -6,6 +6,7 @@ import { OptionTextInput } from "../../../components/OptionTextInput"
 import { searchEngines, Search } from "../../../data/data"
 import { queryToken } from "../../Searchbar/Searchbar"
 import { SettingElement, SettingsLabel } from "../SettingsWindow"
+import { narrowQuery } from "../../useNarrow"
 
 interface props {
   searchSettings: Search
@@ -21,6 +22,10 @@ const Flex = styled.div`
   align-items: center;
   padding-right: 40px;
   gap: 12px;
+
+  @media ${narrowQuery} {
+    padding-right: 0;
+  }
 `
 
 const TextInput = styled(OptionTextInput)`

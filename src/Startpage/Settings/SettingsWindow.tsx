@@ -15,6 +15,7 @@ import { LinkSettings } from "./LinkSettings/LinkSettings"
 import { SearchSettings } from "./SearchSettings/SearchSettings"
 import * as Settings from "./settingsHandler"
 import { IconButton } from "../../components/IconButton"
+import { narrowQuery } from "../useNarrow"
 
 const StyledSettingsWindow = styled.div`
   background-color: var(--bg-color);
@@ -28,11 +29,29 @@ const StyledSettingsWindow = styled.div`
   border: 2px solid var(--default-color);
   padding: 60px 30px 30px 30px;
   box-shadow: 10px 10px 0px var(--accent-color);
+
+  /* Phones: a full-screen sheet. */
+  @media ${narrowQuery} {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    border: none;
+    box-shadow: none;
+    padding: 60px 16px 16px;
+  }
 `
 const WindowContent = styled.div`
   width: 100%;
   height: calc(100% - 80px);
   display: flex;
+
+  @media ${narrowQuery} {
+    height: calc(100% - 64px);
+    flex-direction: column;
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
 `
 
 const WindowHeader = styled.div`
@@ -49,6 +68,13 @@ const WindowHeader = styled.div`
   top: 0;
   display: flex;
   justify-content: space-between;
+
+  @media ${narrowQuery} {
+    height: 44px;
+    ::before {
+      display: none;
+    }
+  }
 `
 
 const WindowFooter = styled.div`
@@ -58,6 +84,13 @@ const WindowFooter = styled.div`
   left: 30px;
   right: 30px;
   bottom: 30px;
+
+  @media ${narrowQuery} {
+    left: 16px;
+    right: 16px;
+    bottom: 16px;
+    gap: 8px;
+  }
 `
 
 export const StyledSettingsContent = styled.div`
@@ -67,6 +100,14 @@ export const StyledSettingsContent = styled.div`
   margin-right: 30px;
   padding-right: 20px;
   overflow-y: auto;
+
+  @media ${narrowQuery} {
+    width: auto;
+    height: auto;
+    margin-right: 0;
+    padding-right: 12px;
+    overflow-y: visible;
+  }
 `
 export const SettingsLabel = styled.p`
   font-size: 1rem;
@@ -87,6 +128,11 @@ const CloseButton = styled(IconButton)`
   height: 30px;
   opacity: 1;
   padding: 0;
+
+  @media ${narrowQuery} {
+    height: 44px;
+    flex-shrink: 0;
+  }
 `
 
 export const SettingsButton = styled(IconButton)`
@@ -97,12 +143,30 @@ export const SettingsButton = styled(IconButton)`
   :enabled:hover {
     animation: circling-shadow-small 2s ease 0s infinite normal;
   }
+
+  @media ${narrowQuery} {
+    flex: 1;
+    min-width: 0;
+    font-size: 0.8rem;
+    padding: 8px 6px;
+  }
 `
 
 const Tabbar = styled.div`
   width: 100%;
   display: flex;
   justify-content: center;
+
+  /* Phones: the tabs become a strip you swipe sideways. */
+  @media ${narrowQuery} {
+    min-width: 0;
+    justify-content: flex-start;
+    overflow-x: auto;
+    scrollbar-width: none;
+    ::-webkit-scrollbar {
+      display: none;
+    }
+  }
 `
 
 const TabOption = styled.button<{ active: boolean }>`
@@ -121,6 +185,13 @@ const TabOption = styled.button<{ active: boolean }>`
   ${({ active }) => active && "text-shadow: var(--text-shadow-downwards)"};
   :hover {
     text-shadow: var(--text-shadow-downwards);
+  }
+
+  @media ${narrowQuery} {
+    min-width: auto;
+    flex-shrink: 0;
+    padding: 0 9px;
+    font-size: 0.85rem;
   }
 `
 
