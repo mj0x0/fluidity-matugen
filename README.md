@@ -5,6 +5,15 @@ Here you can find the startpage I created for my browser :)
 
 If you have any problems or miss a feature, create an issue and I will take a look at it! Of course, if you want to add a feature yourself you can just create a fork and contribute ;)
 
+## What's different from the original
+
+This is a fork of [PrettyCoffee's Fluidity](https://github.com/PrettyCoffee/fluidity) with a few additions of my own:
+
+- **Responsive layout** — sizes scale with the window via `clamp()`, so it holds up from ultrawide down to small windows.
+- **Auto-fit link groups** — long groups shrink to fit the accordion instead of clipping or needing a scrollbar.
+- **Horizontal or vertical accordion** — switch the accordion orientation in the settings.
+- **Category icons** — per-group hand-drawn (potrace) icons, mask-tinted to match the theme.
+
 ## Showcase
 ### The startpage in action
 I created a [reddit post](https://www.reddit.com/r/startpages/comments/m82izg/my_new_startpage_any_ideas_for_names/) on r/startpages. There you can see a short video where I show all available features.
